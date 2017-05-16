@@ -50,15 +50,21 @@ float: left;
   height: 20vh;
   width: 20vh;
 
-  border-radius: 30px;
+  border-radius: 10px;
 
   cursor: pointer;
   float: left;
 }
 
+.keys:active{
+  opacity: 85;
+  border: 2px;
+  border-color: #111;
+}
+
 .button{
   margin: 0.5vh;
-  margin-top: 1vh;
+  margin-top: 2vh;
   padding: 0;
 
   height: 5vh;
@@ -72,6 +78,12 @@ float: left;
   cursor: pointer;
 
   float: left;
+}
+
+.button:active{
+  opacity: 55;
+  border: 2px;
+  border-color: #111;
 }
 
 .footer{
@@ -94,16 +106,20 @@ float: left;
 
 #red{
   background-color : #9f0f17;
+  border-top-right-radius: 100%;
 }
 
 #green{
   background-color : #00a74a;
+  border-top-left-radius: 100%;
 }
 
 #yellow{
   background-color : #cca707;
+  border-bottom-left-radius: 100%;
 }
 
 #blue{
   background-color : #094a8f;
+  border-bottom-right-radius: 100%;
 }
