@@ -56,12 +56,6 @@ float: left;
   float: left;
 }
 
-.keys:active{
-  opacity: 85;
-  border: 2px;
-  border-color: #111;
-}
-
 .button{
   margin: 0.5vh;
   margin-top: 2vh;
@@ -78,12 +72,6 @@ float: left;
   cursor: pointer;
 
   float: left;
-}
-
-.button:active{
-  opacity: 55;
-  border: 2px;
-  border-color: #111;
 }
 
 .footer{
