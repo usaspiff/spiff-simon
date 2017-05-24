@@ -50,10 +50,14 @@ float: left;
   height: 20vh;
   width: 20vh;
 
-  border-radius: 10px;
+  border-radius: px;
 
   cursor: pointer;
   float: left;
+}
+
+.active{
+  box-shadow: 0px 0px 12px 3px rgba(255,220,0,1);
 }
 
 .button{
@@ -66,12 +70,15 @@ float: left;
   line-height: 5vh;
   vertical-align: middle;
 
-  background: gray;
+  background: #AAAAAA;
   text-align: center;
-  border-radius: 15px;
   cursor: pointer;
 
   float: left;
+}
+
+.button:hover{
+  box-shadow: 0px 0px 8px 1px rgba(255,220,0,1);
 }
 
 .footer{
@@ -85,7 +92,7 @@ float: left;
   vertical-align: middle;
 
   background: #111;
-  font-size: 1vh;
+  font-size: 1.5vh;
   text-align: center;
   border-radius: 5px;
 
@@ -93,21 +100,21 @@ float: left;
 }
 
 #red{
-  background-color : #9f0f17;
+  background-color : #F012BE;
   border-top-right-radius: 100%;
 }
 
 #green{
-  background-color : #00a74a;
+  background-color : #01FF70;
   border-top-left-radius: 100%;
 }
 
 #yellow{
-  background-color : #cca707;
+  background-color : #FF851B;
   border-bottom-left-radius: 100%;
 }
 
 #blue{
-  background-color : #094a8f;
+  background-color : #7FDBFF;
   border-bottom-right-radius: 100%;
 }
