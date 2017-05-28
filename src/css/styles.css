@@ -52,12 +52,18 @@ float: left;
 
   border-radius: px;
 
-  cursor: pointer;
   float: left;
 }
 
+.keys:active{
+  box-shadow: 0px 0px 15px 4px white;
+}
 .active{
-  box-shadow: 0px 0px 12px 3px rgba(255,220,0,1);
+  box-shadow: 0px 0px 15px 4px white;
+}
+
+.enabled{
+  cursor: pointer;
 }
 
 .button{
@@ -77,8 +83,8 @@ float: left;
   float: left;
 }
 
-.button:hover{
-  box-shadow: 0px 0px 8px 1px rgba(255,220,0,1);
+.button:active{
+  box-shadow: 0px 0px 6px 1px #7FDBFF;
 }
 
 .footer{

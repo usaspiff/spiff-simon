@@ -20,6 +20,7 @@ var objKeys = {
   yellow: yellow
 };
 
+//Random color selection for each turn of the series
 function colorSeries() {
   steps.push(colors[Math.floor(Math.random() * colors.length)]);
   var turn = steps.length;
@@ -28,39 +29,91 @@ function colorSeries() {
   } else {
     $("#steps").text(turn);
   }
+  console.log("Level "+ turn + " , play "+ steps);
 }
 
 colorSeries();
 
-$("#onOff").click(function() {
+//Play button functionality
+$("#onOff").on('click', function() {
   activateKey(steps);
 });
 
+//Activate the game keys
 function activateKey(items) {
-  $("." + items[0])
+  $("#" + items[0])
     .addClass("active", time, function() {
       objKeys[items[0]].play();
     })
     .removeClass("active", time, function() {
-      activateKeys(item.slice(1));
+      activateKey(items.slice(1));
     });
 
-  if (item.length === 0) {
-    $(".green, .red, .yellow, .blue").addClass("active");
+  if (items.length === 0) {
+    $(".green, .red, .yellow, .blue").addClass("enabled");
   }
 }
 
-$("body").on("click", ".active", function() {
+$("body").on("click", ".enabled", function() {
   if (running) {
     return false;
   }
   running = true;
-});
+  $(this).addClass('active', time, function() {
+    objKeys[$(this).attr('class').split(' ')[0]].play();
+  }).removeClass('active', time, function() {
+
+    recording.push($(this).attr('class').split(' ')[0]);
+    var currentSteps = playerSteps.length;
+    var currentLevel = steps.length;
+    if (playerSteps[currentSteps -1] === steps[currentSteps -1]) {
+      if (currentSteps === currentLevel) {
+        if (currentSteps !== 20) {
+          playerSteps = [];
+          $('.green, .red, .yellow, .blue').removeClass('enabled');
+          $('.correct').fadeIn(500, function() { //Edit string to personalize effect
+            $('.correct').fadeOut(500, function() { //Edit string to personalize effect
+
+              colorSeries();
+              setTimeout(
+              function() {
+                activateKey(steps);
+              }, 200);
+            });
+          });
+        } else {
+          $('.trophy').fadeIn(1000, function() {
+            green.play();
+            red.play();
+            yellow.play();
+            blue.play();
+            $('.trophy').fadeOut(1000, function() {
+              reset();
+            });
+          });
+        }
+      }
+
+    } else {
+      playerSteps = [];
+      $('.green, .red, .yellow, .blue').removeClass('enabled');
+      $('.wrong').fadeIn(500, function() {
+        $('.wrong').fadeOut(500, function() {
+          setTimeout(
+          function() {
+            activateKey(steps);
+          }, 200);
+        });
+      });
+    }
+    running = false;
+  });
+})
 
 
 //Disply reset function after winning or losing in Strict modwe
 function newDisplay() {
-  $(".keys, .button, .footer").show();
+  $(".keys, .button, .footer").fadeIn();
   $(".header").html("SIMON GAME");
   reset();
 }
@@ -68,8 +121,8 @@ function newDisplay() {
 //Winning animation after 20 successful steps
 function weHaveWinner() {
   $(".header").html("YOU WIN!!!");
-  $(".keys, .button, .footer").hide();
-  setTimeout(newDisplay, 6000);
+  $(".keys, .button, .footer").fadeOut("slow");
+  setTimeout(newDisplay, 5000);
   console.log("winner!");
 }
 
@@ -81,7 +134,7 @@ $("#strict").click(function() {
 //Animation after losing in Strict mode
 function weHaveLoser() {
   $(".header").html("YOU LOST!!!");
-  $(".keys, .button, .footer").hide();
+  $(".keys, .button, .footer").fadeOut("fast");
   setTimeout(newDisplay, 3000);
   console.log("You lost!");
 }
@@ -90,9 +143,10 @@ function weHaveLoser() {
 function reset() {
   steps = [];
   playerSteps = [];
-  colorSeries();
-  //activateKeys();
   console.log("game has been reset");
+  colorSeries();
+  activateKey();
+
 }
 
 //Reset button action
