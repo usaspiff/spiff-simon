@@ -63,7 +63,7 @@ $("body").on("click", ".enabled", function() {
     objKeys[$(this).attr('class').split(' ')[0]].play();
   }).removeClass('active', time, function() {
 
-    recording.push($(this).attr('class').split(' ')[0]);
+    playerSteps.push($(this).attr('class').split(' ')[0]);
     var currentSteps = playerSteps.length;
     var currentLevel = steps.length;
     if (playerSteps[currentSteps -1] === steps[currentSteps -1]) {
@@ -108,7 +108,7 @@ $("body").on("click", ".enabled", function() {
     }
     running = false;
   });
-})
+});
 
 
 //Disply reset function after winning or losing in Strict modwe
@@ -145,7 +145,7 @@ function reset() {
   playerSteps = [];
   console.log("game has been reset");
   colorSeries();
-  activateKey();
+  activateKey(steps);
 
 }
 
