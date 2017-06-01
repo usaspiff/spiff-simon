@@ -1,4 +1,4 @@
-html, body{
+html, body {
   padding: 0;
   margin: 0;
 
@@ -9,67 +9,110 @@ html, body{
   font-family: sans-serif;
 }
 
-#main{
+.row {
   margin: 0;
   padding: 0;
   padding-top: 25vh;
-
   height: auto;
   width: 100%;
 }
 
-#board{
+.container {
   padding: 0;
   margin: auto;
   width: 50vh;
   height: 50vh;
 }
 
-.header{
-padding: 0;
-margin: 1vh;
-
-height: 5vh;
-width: 41vh;
-
-line-height: 5vh;
-vertical-align: middle;
-
-background: #111;
-font-size: 4vh;
-text-align: center;
-border-radius: 5px;
-
-float: left;
-}
-
-.keys{
+h1 {
   padding: 0;
-  margin: 0.5vh;
-
-  height: 20vh;
-  width: 20vh;
-
-  border-radius: px;
-
+  margin: 1vh;
+  height: 5vh;
+  width: 41vh;
+  line-height: 5vh;
+  vertical-align: middle;
+  background: #111;
+  font-size: 4vh;
+  text-align: center;
+  border-radius: 5px;
   float: left;
 }
 
-.keys:active{
-  box-shadow: 0px 0px 15px 4px white;
-}
-.active{
-  box-shadow: 0px 0px 15px 4px white;
+.footer {
+  padding: 2vh;
+  margin: 1vh;
+  height: 5vh;
+  width: 41vh;
+  line-height: 5vh;
+  vertical-align: middle;
+  background: #111;
+  font-size: 1.5vh;
+  text-align: center;
+  border-radius: 5px;
+  float: left;
 }
 
-.enabled{
+
+/*Game keys settings*/
+.green, .red, .yellow, .blue {
+  padding: 0;
+  margin: 0.5vh;
+  height: 20vh;
+  width: 20vh;
+  float: left;
+}
+
+.green {
+  background-color: #01FF70;
+  border-top-left-radius: 100%;
+}
+
+.red {
+  background-color: #F012BE;
+  border-top-right-radius: 100%;
+}
+
+.blue {
+  background-color: #7FDBFF;
+  border-bottom-right-radius: 100%;
+}
+
+.yellow {
+  background-color: #FF851B;
+  border-bottom-left-radius: 100%;
+}
+
+.enabled {
   cursor: pointer;
 }
 
-.button{
+
+/*Active game buttons*/
+.green:active{
+  box-shadow: 0px 0px 15px 4px white;
+}
+
+.red:active{
+  box-shadow: 0px 0px 15px 4px white;
+}
+
+ .blue:active{
+  box-shadow: 0px 0px 15px 4px white;
+}
+
+.yellow:active{
+  box-shadow: 0px 0px 15px 4px white;
+}
+.strict {
+  box-shadow: 0px 0px 6px 1px red;
+}
+
+/*Interface buttons */
+.btn{
   margin: 0.5vh;
   margin-top: 2vh;
   padding: 0;
+  border-radius: 0px;
 
   height: 5vh;
   width: 9.5vh;
@@ -83,44 +126,9 @@ float: left;
   float: left;
 }
 
+#level{
+  cursor: auto;
+}
 .button:active{
   box-shadow: 0px 0px 6px 1px #7FDBFF;
-}
-
-.footer{
-  padding: 2vh;
-  margin: 1vh;
-
-  height: 5vh;
-  width: 41vh;
-
-  line-height: 5vh;
-  vertical-align: middle;
-
-  background: #111;
-  font-size: 1.5vh;
-  text-align: center;
-  border-radius: 5px;
-
-  float: left;
-}
-
-#red{
-  background-color : #F012BE;
-  border-top-right-radius: 100%;
-}
-
-#green{
-  background-color : #01FF70;
-  border-top-left-radius: 100%;
-}
-
-#yellow{
-  background-color : #FF851B;
-  border-bottom-left-radius: 100%;
-}
-
-#blue{
-  background-color : #7FDBFF;
-  border-bottom-right-radius: 100%;
 }

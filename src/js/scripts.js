@@ -1,115 +1,145 @@
-//Initial game conditions
-var steps = [];
-var playerSteps = [];
+var turns = [];
 var colors = ["green", "red", "blue", "yellow"];
-var strict = false;
-var time = 200;
+var recording = [];
+var speed = 200;
+var strictMode = false;
 var running;
 
-//sound files
-var green = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound1.mp3");
-var red = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound2.mp3");
-var yellow = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound3.mp3");
-var blue = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound4.mp3");
+//Audio files for button sounds
+var green = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound1.mp3');
+var red = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound2.mp3');
+var yellow = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound3.mp3');
+var blue = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound4.mp3');
 
-//board keys
-var objKeys = {
-  green: green,
-  red: red,
-  blue: blue,
-  yellow: yellow
+var obj = {
+  "green": green,
+  "red": red,
+  "yellow": yellow,
+  "blue": blue
 };
 
 //Random color selection for each turn of the series
-function colorSeries() {
-  steps.push(colors[Math.floor(Math.random() * colors.length)]);
-  var turn = steps.length;
-  if (turn < 10) {
-    $("#steps").text("0" + turn);
+function addRandomColor() {
+  turns.push(colors[Math.floor(Math.random() * colors.length)]);
+  var level = turns.length;
+  //$('.level').text(level);
+  if (level < 10) {
+    $("#level").text("0" + level);
   } else {
-    $("#steps").text(turn);
+    $("#level").text(level);
   }
-  console.log("Level "+ turn + " , play "+ steps);
+  console.log("Level "+ level + " , play "+ turns);
 }
 
-colorSeries();
+
+addRandomColor();
 
 //Play button functionality
-$("#onOff").on('click', function() {
-  activateKey(steps);
+$('#play').on('click', function() {
+  console.log("Let's play"); //Remove after testing
+  nextItemActivate(turns);
 });
 
-//Activate the game keys
-function activateKey(items) {
-  $("#" + items[0])
-    .addClass("active", time, function() {
-      objKeys[items[0]].play();
-    })
-    .removeClass("active", time, function() {
-      activateKey(items.slice(1));
-    });
+// Animation callback to start next fade-in
+function nextItemActivate(items) {
+  // Fade in the first element in the collection
 
+  $('.' + items[0]).addClass('active', speed, function() {
+
+    obj[items[0]].play();
+  }).removeClass('active', speed, function() {
+
+    // Recurse, but without the first element
+    nextItemActivate(items.slice(1));
+  });
+  console.log("Check 1"); //Remove after testing
   if (items.length === 0) {
-    $(".green, .red, .yellow, .blue").addClass("enabled");
+    $('.green, .red, .yellow, .blue').addClass('enabled');
+    console.log("Check 2"); //Remove after testing
   }
 }
 
-$("body").on("click", ".enabled", function() {
-  if (running) {
+$('body').on('click', '.enabled', function() {
+  if (running){
     return false;
+    //console.log("Check 3"); //Remove after testing
   }
+  //console.log("Check 4"); //Remove after testing
   running = true;
-  $(this).addClass('active', time, function() {
-    objKeys[$(this).attr('class').split(' ')[0]].play();
-  }).removeClass('active', time, function() {
+  $(this).addClass('active', speed, function() {
+    obj[$(this).attr('class').split(' ')[0]].play();
+  }).removeClass('active', speed, function() {
 
-    playerSteps.push($(this).attr('class').split(' ')[0]);
-    var currentSteps = playerSteps.length;
-    var currentLevel = steps.length;
-    if (playerSteps[currentSteps -1] === steps[currentSteps -1]) {
-      if (currentSteps === currentLevel) {
-        if (currentSteps !== 20) {
-          playerSteps = [];
+    recording.push($(this).attr('class').split(' ')[0]);
+    var currentMoves = recording.length
+    var currentLevel = turns.length
+    if (recording[currentMoves - 1] === turns[currentMoves - 1]) {
+      if (currentMoves === currentLevel) {
+        if (currentMoves !== 3) {
+          recording = [];
           $('.green, .red, .yellow, .blue').removeClass('enabled');
-          $('.correct').fadeIn(500, function() { //Edit string to personalize effect
-            $('.correct').fadeOut(500, function() { //Edit string to personalize effect
+          $('.correct').fadeIn(500, function() {
+            $('.correct').fadeOut(500, function() {
 
-              colorSeries();
+              addRandomColor();
               setTimeout(
-              function() {
-                activateKey(steps);
-              }, 200);
+                function() {
+                  nextItemActivate(turns);
+                }, 200);
             });
           });
         } else {
-          $('.trophy').fadeIn(1000, function() {
-            green.play();
-            red.play();
-            yellow.play();
-            blue.play();
-            $('.trophy').fadeOut(1000, function() {
-              reset();
-            });
-          });
+          weHaveWinner();
         }
+
       }
 
     } else {
-      playerSteps = [];
+      recording = [];
       $('.green, .red, .yellow, .blue').removeClass('enabled');
       $('.wrong').fadeIn(500, function() {
         $('.wrong').fadeOut(500, function() {
           setTimeout(
-          function() {
-            activateKey(steps);
-          }, 200);
+            function() {
+              nextItemActivate(turns);
+            }, 200);
         });
       });
+
     }
     running = false;
   });
-});
 
+})
+
+//reset function tied to Reset button and winning or losing (Strict mode) conditions
+function reset() {
+  if ($('.green, .red, .yellow, .blue').hasClass('enabled')) {
+    turns = [];
+    recording = [];
+    speed = 200;
+    console.log('Game has been reset');
+    addRandomColor();
+    nextItemActivate(turns);
+    var strict = false;
+  }
+
+}
+
+//Reset button action
+$('button.reset').on('click', function() {
+  reset();
+})
+
+//Strict function tied to Strict button
+function toggleStrict(){
+  $('#strict').toggleClass('strict');
+  console.log('Strict mode activated. Good luck!');
+  var strict = true;
+}
+
+//Strict button action
+$('#strict').click(toggleStrict);
 
 //Disply reset function after winning or losing in Strict modwe
 function newDisplay() {
@@ -121,15 +151,11 @@ function newDisplay() {
 //Winning animation after 20 successful steps
 function weHaveWinner() {
   $(".header").html("YOU WIN!!!");
+  playWinningTune()
   $(".keys, .button, .footer").fadeOut("slow");
   setTimeout(newDisplay, 5000);
-  console.log("winner!");
+  console.log("Winner!");
 }
-
-//Change string below to assign to winning condition and target Strict button properly
-$("#strict").click(function() {
-  weHaveWinner();
-});
 
 //Animation after losing in Strict mode
 function weHaveLoser() {
@@ -139,17 +165,10 @@ function weHaveLoser() {
   console.log("You lost!");
 }
 
-//Reset function tied to Reset button and winning or losing condiditions
-function reset() {
-  steps = [];
-  playerSteps = [];
-  console.log("game has been reset");
-  colorSeries();
-  activateKey(steps);
-
-}
-
-//Reset button action
-$("#reset").click(function() {
-  reset();
-});
+//Keys play after winning
+function playWinningTune() {
+          green.play();
+          red.play();
+          yellow.play();
+          blue.play();
+        };
