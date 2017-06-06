@@ -88,23 +88,9 @@ h1 {
 
 
 /*Active game buttons*/
-.green:active{
+.active{
+  background-color: white;
   box-shadow: 0px 0px 15px 4px white;
-}
-
-.red:active{
-  box-shadow: 0px 0px 15px 4px white;
-}
-
- .blue:active{
-  box-shadow: 0px 0px 15px 4px white;
-}
-
-.yellow:active{
-  box-shadow: 0px 0px 15px 4px white;
-}
-.strict {
-  box-shadow: 0px 0px 6px 1px red;
 }
 
 /*Interface buttons */
@@ -126,9 +112,14 @@ h1 {
   float: left;
 }
 
+.btn:active{
+  box-shadow: 0px 0px 6px 1px #7FDBFF;
+}
+
 #level{
   cursor: auto;
 }
-.button:active{
-  box-shadow: 0px 0px 6px 1px #7FDBFF;
+
+.strict {
+  box-shadow: 0px 0px 6px 1px red;
 }
